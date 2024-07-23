@@ -12,7 +12,7 @@ function scene:create(event)
 	local mainGroup = self.view
 	physics.start()
 
-	physics.setDrawMode("hybrid")
+	physics.setDrawMode("normal")
 	physics.setGravity(0, 0)
 
 	local topWall = display.newRect(mainGroup, w / 2, 0, w, 3)
@@ -31,11 +31,13 @@ function scene:create(event)
 	local ball = display.newCircle(mainGroup, w / 2, h / 2, w * 0.02)
 	physics.addBody(ball, "dynamic", { bounce = 1, radius = w * 0.02 })
 	ball:setLinearVelocity(0, -500)
+	ball.id = "ball"
 	ball:addEventListener("collision", function(event)
 		if event.phase == "began" then
 			if event.other.id == "block" then
 				timer.performWithDelay(0, function()
 					event.other:removeSelf()
+					retangleRefs[event.other.j][event.other.i] = nil
 				end)
 			end
 		end
@@ -44,6 +46,9 @@ function scene:create(event)
 	local player = display.newRect(mainGroup, w * 0.5, h * 0.7, w * 0.2, h * 0.02)
 	physics.addBody(player, "static")
 	Runtime:addEventListener("mouse", function(event)
+		if player == nil then
+			return
+		end
 		if event.x < w * 0.1 or event.x > w * 0.9 then
 			return
 		end
@@ -57,9 +62,41 @@ function scene:create(event)
 			rect:setFillColor(math.random(), math.random(), math.random())
 			physics.addBody(rect, "static")
 			rect.id = "block"
+			rect.i = i
+			rect.j = j
 			retangleRefs[j][i] = rect
 		end
 	end
+
+	bottonWall:addEventListener("collision", function(event)
+		if event.phase == "began" then
+			if event.other.id == "ball" then
+				timer.performWithDelay(800, function()
+					for j = 1, 10, 1 do
+						for i = 1, 10, 1 do
+							if retangleRefs[j][i] ~= nil then
+								retangleRefs[j][i]:removeSelf()
+								retangleRefs[j][i] = nil
+							end
+						end
+					end
+					ball:removeSelf()
+					ball = nil
+					player:removeSelf()
+					player = nil
+					topWall:removeSelf()
+					topWall = nil
+					bottonWall:removeSelf()
+					bottonWall = nil
+					leftWall:removeSelf()
+					leftWall = nil
+					rightWall:removeSelf()
+					rightWall = nil
+				end)
+				composer.gotoScene("scenes.end", { effect = "crossFade", time = 800 })
+			end
+		end
+	end)
 end
 
 scene:addEventListener("create", scene)

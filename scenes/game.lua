@@ -94,6 +94,7 @@ function scene:create(e)
 					leftWall = nil
 					rightWall:removeSelf()
 					rightWall = nil
+					physics.stop()
 				end)
 				composer.gotoScene("scenes.end", { effect = "crossFade", time = 800 })
 			end

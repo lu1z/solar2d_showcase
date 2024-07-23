@@ -8,7 +8,7 @@ local scene = composer.newScene()
 -- 9, 6, 8
 local retangleRefs = {}
 
-function scene:create(event)
+function scene:create(e)
 	local mainGroup = self.view
 	physics.start()
 
@@ -45,7 +45,7 @@ function scene:create(event)
 
 	local player = display.newRect(mainGroup, w * 0.5, h * 0.7, w * 0.2, h * 0.02)
 	physics.addBody(player, "static")
-	Runtime:addEventListener("mouse", function(event)
+	local mouseListener = Runtime:addEventListener("mouse", function(event)
 		if player == nil then
 			return
 		end
@@ -82,6 +82,8 @@ function scene:create(event)
 					end
 					ball:removeSelf()
 					ball = nil
+					Runtime:removeEventListener("mouse", mouseListener)
+					mouseListener = nil
 					player:removeSelf()
 					player = nil
 					topWall:removeSelf()

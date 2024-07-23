@@ -1,7 +1,5 @@
------------------------------------------------------------------------------------------
---
--- main.lua
---
------------------------------------------------------------------------------------------
+w, h = display.contentWidth, display.contentHeight
 
--- Your code here
+local composer = require("composer")
+
+composer.gotoScene("scenes.game")

@@ -1,6 +1,8 @@
 local composer = require("composer")
 local physics = require("physics")
 
+local records_api_adapter = require("records_api_adapter")
+
 local scene = composer.newScene()
 
 -- 2, 3, 7
@@ -72,14 +74,22 @@ function scene:create(e)
 		if event.phase == "began" then
 			if event.other.id == "ball" then
 				timer.performWithDelay(800, function()
+					local score = 0
 					for j = 1, 10, 1 do
 						for i = 1, 10, 1 do
 							if retangleRefs[j][i] ~= nil then
 								retangleRefs[j][i]:removeSelf()
 								retangleRefs[j][i] = nil
+							else
+								score = score + 1
 							end
 						end
 					end
+					records_api_adapter.postRecord("grupo 5", score, function(response)
+						if response.message ~= nil then
+							print("Resolva estes problemas no seu código: " .. response.message)
+						end
+					end)
 					ball:removeSelf()
 					ball = nil
 					Runtime:removeEventListener("mouse", mouseListener)

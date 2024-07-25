@@ -10,9 +10,9 @@ function scene:create(event)
 		effect = "fade",
 	}
 
-	local texto = display.newText(credits, "CREDITOS", w * 0.5, h * 0.1, nil, 60)
+	local texto = display.newText(credits, "CREDITOS", w * 0.5, h * 0.1, font, 60)
 
-	local textosair = display.newText(credits, "SAIR", w * 0.5, h * 0.9, nil, 50)
+	local textosair = display.newText(credits, "SAIR", w * 0.5, h * 0.9, font, 50)
 
 	textosair:addEventListener("touch", function(e)
 		if e.phase == "began" then

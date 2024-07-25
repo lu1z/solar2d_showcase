@@ -12,12 +12,20 @@ function scene:create(e)
 		x = w * 0.5,
 		y = h * 0.1,
 		text = "Recordes",
+		font = font,
+		fontSize = 50,
 	})
 
 	records_api_adapter.getRecords(function(response)
+		local function ordenar(a, b)
+			return a.score > b.score
+		end
+		table.sort(response, ordenar)
+
 		local records = ""
-		for _, record in ipairs(response) do
-			records = records .. record.player .. ": " .. record.score .. "\n"
+		-- local minimo = #response
+		for i = 1, 10 do
+			records = records .. response[i].player .. ": " .. response[i].score .. "\n"
 		end
 		display.newText({
 			parent = mainGroup,
@@ -32,8 +40,22 @@ function scene:create(e)
 	--     print("Resolva estes problemas no seu código: " .. response.message)
 	--   end
 	-- end)
-end
 
+	local textosair = display.newText({
+		parent = mainGroup,
+		text = "SAIR",
+		x = w * 0.5,
+		y = h * 0.9,
+		font = font,
+		fontSize = 50,
+	})
+
+	textosair:addEventListener("touch", function(e)
+		if e.phase == "began" then
+			composer.gotoScene("scenes.menu")
+		end
+	end)
+end
 scene:addEventListener("create", scene)
 
 return scene

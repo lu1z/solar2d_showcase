@@ -5,6 +5,8 @@ local records_api_adapter = require("records_api_adapter")
 
 local scene = composer.newScene()
 
+local contadorPontos = 0
+
 -- 2, 3, 7
 -- 4, 6, 8
 -- 9, 6, 8
@@ -30,6 +32,15 @@ function scene:create(e)
 	rightWall.alpha = 0
 	physics.addBody(rightWall, "static")
 
+	local pontos = display.newText({
+		parent = mainGroup,
+		text = "0",
+		x = w * 0.5,
+		y = h * 0.9,
+		font = font,
+		fontSize = 50,
+	})
+
 	local ball = display.newCircle(mainGroup, w / 2, h / 2, w * 0.02)
 	physics.addBody(ball, "dynamic", { bounce = 1, radius = w * 0.02 })
 	ball:setLinearVelocity(0, -500)
@@ -38,6 +49,8 @@ function scene:create(e)
 		if event.phase == "began" then
 			if event.other.id == "block" then
 				timer.performWithDelay(0, function()
+					contadorPontos = contadorPontos + 1
+					pontos.text = contadorPontos .. ""
 					event.other:removeSelf()
 					retangleRefs[event.other.j][event.other.i] = nil
 				end)
@@ -85,7 +98,7 @@ function scene:create(e)
 							end
 						end
 					end
-					records_api_adapter.postRecord("grupo 5", score, function(response)
+					records_api_adapter.postRecord(composer.getVariable("nome"), score, function(response)
 						if response.message ~= nil then
 							print("Resolva estes problemas no seu código: " .. response.message)
 						end
@@ -105,6 +118,7 @@ function scene:create(e)
 					rightWall:removeSelf()
 					rightWall = nil
 					physics.stop()
+					composer.removeScene("scenes.game")
 				end)
 				composer.gotoScene("scenes.end", { effect = "crossFade", time = 800 })
 			end

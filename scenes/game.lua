@@ -5,14 +5,14 @@ local records_api_adapter = require("records_api_adapter")
 
 local scene = composer.newScene()
 
-local contadorPontos = 0
-
--- 2, 3, 7
--- 4, 6, 8
--- 9, 6, 8
-local retangleRefs = {}
-
 function scene:create(e)
+	local contadorPontos = 0
+
+	-- 2, 3, 7
+	-- 4, 6, 8
+	-- 9, 6, 8
+	local retangleRefs = {}
+
 	local mainGroup = self.view
 	physics.start()
 
@@ -98,7 +98,7 @@ function scene:create(e)
 							end
 						end
 					end
-					records_api_adapter.postRecord(composer.getVariable("nome"), score, function(response)
+					records_api_adapter.postRecord(nome, score, function(response)
 						if response.message ~= nil then
 							print("Resolva estes problemas no seu código: " .. response.message)
 						end

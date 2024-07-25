@@ -23,8 +23,7 @@ function scene:create(e)
 		table.sort(response, ordenar)
 
 		local records = ""
-		-- local minimo = #response
-		for i = 1, 10 do
+		for i = 1, math.min(#response, 10) do
 			records = records .. response[i].player .. ": " .. response[i].score .. "\n"
 		end
 		display.newText({
@@ -53,6 +52,7 @@ function scene:create(e)
 	textosair:addEventListener("touch", function(e)
 		if e.phase == "began" then
 			composer.gotoScene("scenes.menu")
+			composer.removeScene("scenes.records")
 		end
 	end)
 end

@@ -19,15 +19,13 @@ function scene:create(event)
 		if event.phase == "began" then
 		elseif event.phase == "ended" or event.phase == "submitted" then
 			print(event.target.text)
-			composer.setVariable("nome", event.target.text)
+			nome = event.target.text
 		elseif event.phase == "editing" then
-			print(event.newCharacters)
-			print(event.oldText)
-			print(event.startPosition)
+			nome = event.text
 			print(event.text)
 		end
 	end
-	defaultField = native.newTextField(150, 150, 180, 30)
+	defaultField = native.newTextField(w * 0.5, h * 0.25, 180, 60)
 	defaultField:addEventListener("userInput", textListener)
 	menu:insert(defaultField)
 
@@ -49,6 +47,7 @@ function scene:create(event)
 		if e.phase == "began" then
 			composer.gotoScene("scenes.game", efeitoCena)
 			defaultField:removeSelf()
+			composer.removeScene("scenes.menu")
 		end
 	end)
 
@@ -56,6 +55,7 @@ function scene:create(event)
 		if e.phase == "began" then
 			composer.gotoScene("scenes.credits", efeitoCena)
 			defaultField:removeSelf()
+			composer.removeScene("scenes.menu")
 		end
 	end)
 
@@ -63,6 +63,7 @@ function scene:create(event)
 		if e.phase == "began" then
 			composer.gotoScene("scenes.records", efeitoCena)
 			defaultField:removeSelf()
+			composer.removeScene("scenes.menu")
 		end
 	end)
 

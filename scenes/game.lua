@@ -18,6 +18,7 @@ function scene:create(e)
 	local retangleRefs = {}
 
 	physics.start()
+	physics.pause()
 
 	physics.setDrawMode("normal")
 	physics.setGravity(0, 0)
@@ -44,7 +45,7 @@ function scene:create(e)
 		fontSize = 50,
 	})
 
-	local ball = display.newCircle(mainGroup, w / 2, h / 2, w * 0.02)
+	local ball = display.newCircle(mainGroup, w / 2, h * 0.6, w * 0.02)
 	physics.addBody(ball, "dynamic", { bounce = 1, radius = w * 0.02 })
 	ball:setLinearVelocity(0, -500)
 	ball.id = "ball"
@@ -82,7 +83,7 @@ function scene:create(e)
 	for j = 1, 10, 1 do
 		retangleRefs[j] = {}
 		for i = 1, 10, 1 do
-			local rect = display.newRect(mainGroup, w * (0.1 * (i - 0.55)), h * 0.02 * j, w * 0.09, h * 0.015)
+			local rect = display.newRect(mainGroup, w * (0.1 * (i - 0.55)), h * 0.05 * j, w * 0.09, h * 0.015)
 			rect:setFillColor(math.random(), math.random(), math.random())
 			physics.addBody(rect, "static")
 			rect.id = "block"
@@ -135,6 +136,18 @@ function scene:create(e)
 	end)
 end
 
+function scene:show(event)
+	local sceneGroup = self.view
+	local phase = event.phase
+
+	if phase == "will" then
+		-- Code here runs when the scene is still off screen (but is about to come on screen)
+	elseif phase == "did" then
+		-- Code here runs when the scene is entirely on screen
+		physics.start()
+	end
+end
+scene:addEventListener("show", scene)
 scene:addEventListener("create", scene)
 
 return scene

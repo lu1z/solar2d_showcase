@@ -63,8 +63,11 @@ function scene:create(e)
 		end
 	end)
 
-	local player = display.newRect(mainGroup, w * 0.5, h * 0.7, w * 0.2, h * 0.02)
-	physics.addBody(player, "static")
+	local player = display.newRoundedRect(mainGroup, w * 0.5, h * 0.7, w * 0.2, h * 0.02, 15)
+	local bolaSeguidora = display.newCircle(mainGroup, w * 0.5, h * 0.755, 0)
+
+	physics.addBody(player, "static", { bounce = 1 })
+	physics.addBody(bolaSeguidora, "static", { bounce = 1, radius = 70 })
 	local mouseListener = Runtime:addEventListener("mouse", function(event)
 		if player == nil then
 			return
@@ -72,6 +75,7 @@ function scene:create(e)
 		if event.x < w * 0.1 or event.x > w * 0.9 then
 			return
 		end
+		bolaSeguidora.x = event.x
 		player.x = event.x
 	end)
 

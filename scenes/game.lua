@@ -6,6 +6,10 @@ local records_api_adapter = require("records_api_adapter")
 local scene = composer.newScene()
 
 function scene:create(e)
+	local mainGroup = self.view
+	local fundo = display.newImageRect(mainGroup, "assets/images/" .. math.random(1, 4) .. ".jpg", w, h)
+	fundo.x = w / 2
+	fundo.y = h / 2
 	local contadorPontos = 0
 
 	-- 2, 3, 7
@@ -13,7 +17,6 @@ function scene:create(e)
 	-- 9, 6, 8
 	local retangleRefs = {}
 
-	local mainGroup = self.view
 	physics.start()
 
 	physics.setDrawMode("normal")
@@ -37,7 +40,7 @@ function scene:create(e)
 		text = "0",
 		x = w * 0.5,
 		y = h * 0.9,
-		font = font,
+		font = "assets/fonts/PUSAB___old.otf",
 		fontSize = 50,
 	})
 
@@ -48,6 +51,8 @@ function scene:create(e)
 	ball:addEventListener("collision", function(event)
 		if event.phase == "began" then
 			if event.other.id == "block" then
+				audio.seek(850, audioPonto)
+				audio.play(audioPonto)
 				timer.performWithDelay(0, function()
 					contadorPontos = contadorPontos + 1
 					pontos.text = contadorPontos .. ""

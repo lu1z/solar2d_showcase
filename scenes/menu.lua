@@ -5,13 +5,17 @@ local scene = composer.newScene()
 function scene:create(event)
 	local menu = self.view
 
-	local titulo = display.newText(menu, "MENU", w * 0.5, h * 0.1, font, 60)
+	local fundo = display.newImageRect(menu, "assets/images/" .. math.random(1, 4) .. ".jpg", w, h)
+	fundo.x = w / 2
+	fundo.y = h / 2
 
-	local textojogar = display.newText(menu, "JOGAR", w * 0.5, h * 0.40, font, 60)
+	local titulo = display.newText(menu, "ARKANOIA", w * 0.5, h * 0.1, fonte, 60)
 
-	local textocreditos = display.newText(menu, "CREDITOS", w * 0.5, h * 0.50, font, 60)
+	local textojogar = display.newText(menu, "JOGAR", w * 0.5, h * 0.40, fonte, 60)
 
-	local textorecordes = display.newText(menu, "RECORDES", w * 0.5, h * 0.60, font, 60)
+	local textocreditos = display.newText(menu, "CREDITOS", w * 0.5, h * 0.50, fonte, 60)
+
+	local textorecordes = display.newText(menu, "RECORDES", w * 0.5, h * 0.60, fonte, 60)
 
 	local defaultField
 
@@ -30,12 +34,21 @@ function scene:create(event)
 	menu:insert(defaultField)
 
 	local textosair = display.newText({
-		font = "assets/fonts/PUSAB___.otf",
+		font = fonte,
 		x = w * 0.5,
 		y = h * 0.9,
 		parent = menu,
 		text = "SAIR",
 		fontSize = 50,
+	})
+
+	display.newText({
+		font = fonte,
+		x = w * 0.5,
+		y = h * 0.2,
+		parent = menu,
+		text = "Nickname:",
+		fontSize = 35,
 	})
 
 	local efeitoCena = {

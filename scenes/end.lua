@@ -4,13 +4,16 @@ local scene = composer.newScene()
 
 function scene:create(e)
 	local mainGroup = self.view
+	local fundo = display.newImageRect(mainGroup, "assets/images/" .. math.random(1, 4) .. ".jpg", w, h)
+	fundo.x = w / 2
+	fundo.y = h / 2
 
 	display.newText({
 		parent = mainGroup,
 		x = w * 0.5,
 		y = h * 0.1,
-		text = "Perdeu Otário!",
-		font = font,
+		text = "PERDEU!",
+		font = fonte,
 		fontSize = 50,
 	})
 
@@ -19,7 +22,7 @@ function scene:create(e)
 		x = w * 0.5,
 		y = h * 0.5,
 		text = "Records",
-		font = font,
+		font = fonte,
 		fontSize = 50,
 	})
 	buttonRecords:addEventListener("touch", function(e)

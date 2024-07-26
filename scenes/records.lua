@@ -6,13 +6,16 @@ local scene = composer.newScene()
 
 function scene:create(e)
 	local mainGroup = self.view
+	local fundo = display.newImageRect(mainGroup, "assets/images/" .. math.random(1, 4) .. ".jpg", w, h)
+	fundo.x = w / 2
+	fundo.y = h / 2
 
 	display.newText({
 		parent = mainGroup,
 		x = w * 0.5,
 		y = h * 0.1,
 		text = "Recordes",
-		font = font,
+		font = fonte,
 		fontSize = 50,
 	})
 
@@ -31,6 +34,8 @@ function scene:create(e)
 			x = w * 0.5,
 			y = h * 0.5,
 			text = records,
+
+			fontSize = 36,
 		})
 	end)
 	-- EXEMPLO DE COMO REGISTRAR UM RECORDE
@@ -45,7 +50,7 @@ function scene:create(e)
 		text = "SAIR",
 		x = w * 0.5,
 		y = h * 0.9,
-		font = font,
+		font = fonte,
 		fontSize = 50,
 	})
 

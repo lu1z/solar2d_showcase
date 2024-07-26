@@ -30,6 +30,21 @@ function scene:create(e)
 			composer.gotoScene("scenes.records", { effect = "crossFade", time = 800 })
 		end
 	end)
+
+	local textosair = display.newText({
+		parent = mainGroup,
+		text = "SAIR",
+		x = w * 0.5,
+		y = h * 0.9,
+		font = fonte,
+		fontSize = 50,
+	})
+
+	textosair:addEventListener("touch", function(e)
+		if e.phase == "began" then
+			composer.gotoScene("scenes.menu")
+		end
+	end)
 end
 
 scene:addEventListener("create", scene)

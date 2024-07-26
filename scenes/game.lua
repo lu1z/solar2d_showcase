@@ -26,7 +26,7 @@ function scene:create(e)
 	local topWall = display.newRect(mainGroup, w / 2, 0, w, 3)
 	topWall.alpha = 0
 	physics.addBody(topWall, "static")
-	local bottonWall = display.newRect(mainGroup, w / 2, h, w, 3)
+	local bottonWall = display.newRect(mainGroup, w / 2, h, w * 200, 3)
 	bottonWall.alpha = 0
 	physics.addBody(bottonWall, "static", { isSensor = true })
 	local leftWall = display.newRect(mainGroup, 0, h / 2, 3, h)
@@ -70,7 +70,7 @@ function scene:create(e)
 	physics.addBody(player, "static", { bounce = 1 })
 	physics.addBody(bolaSeguidora, "static", { bounce = 1, radius = 70 })
 	local mouseListener = Runtime:addEventListener("mouse", function(event)
-		if player == nil then
+		if player == nil or bolaSeguidora == nil then
 			return
 		end
 		if event.x < w * 0.1 or event.x > w * 0.9 then
@@ -119,6 +119,8 @@ function scene:create(e)
 					mouseListener = nil
 					player:removeSelf()
 					player = nil
+					bolaSeguidora:removeSelf()
+					bolaSeguidora = nil
 					topWall:removeSelf()
 					topWall = nil
 					bottonWall:removeSelf()
